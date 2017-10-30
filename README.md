@@ -16,11 +16,11 @@ The container supports executing as either the spark master or a worker based on
 variables (for use in docker-compose.yml for example). 
 
 From the command line:
-	```bash
+	```
 	docker container run -h spark-master polydeuce-sys/docker-spark
 	```
 will launch a spark master.
-	```bash
+	```
 	docker container run polydeuce-sys/docker-spark worker "spark://spark-master:7777"
 	```
 will launch a spark worker pointing to as master on the host spark-master with port 7777.
@@ -31,7 +31,7 @@ If the second arg is not given, the default spark URL of
 will be used. 
 
 With ENV variables, 
-	```bash
+	```
 	SPARK_MODE=worker
 	SPARK_MASTER=spark://spark-master:7777
 	```
