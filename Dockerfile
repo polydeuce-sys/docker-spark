@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-MAINTAINER Prashanth Babu <Prashanth.Babu@gmail.com>
+MAINTAINER Kevin McLellan <polydeuce.sys@gmail.com>
 
 # Scala related variables.
 ARG SCALA_VERSION=2.12.2
@@ -37,9 +37,11 @@ RUN apt-get -yqq update && \
     ln -s ${SCALA_BINARY_ARCHIVE_NAME} scala && \
     ln -s ${SPARK_BINARY_ARCHIVE_NAME} spark && \
     cp spark/conf/log4j.properties.template spark/conf/log4j.properties && \
-    sed -i -e s/WARN/ERROR/g spark/conf/log4j.properties && \
-    sed -i -e s/INFO/ERROR/g spark/conf/log4j.properties
+    sbt about
 
+# Spark launcher script that allows running as master or worker
+# based on ENV or args
+ADD run_spark /
 # We will be running our Spark jobs as `root` user.
 USER root
 
@@ -50,6 +52,6 @@ WORKDIR /root
 # SparkContext web UI on 4040 -- only available for the duration of the application.
 # Spark master’s web UI on 8080.
 # Spark worker web UI on 8081.
-EXPOSE 4040 8080 8081
+EXPOSE 4040 8080 8081 7077
 
-CMD ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c", "/run_spark \"$@\"", "--"]
