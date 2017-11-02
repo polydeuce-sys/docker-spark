@@ -1,3 +1,5 @@
+# Modified from original work by Prashanth Babu <Prashanth.Babu@gmail.com>
+# added call to sbt to build. changed entry point to launcher script. Exposed rest port 6060
 FROM openjdk:8
 
 MAINTAINER Kevin McLellan <polydeuce.sys@gmail.com>
