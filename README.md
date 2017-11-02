@@ -1,6 +1,6 @@
 # docker-spark
 
-Dockerfiles for ***Apache Spark***.<br>
+Dockerfile for ***Apache Spark***.<br>
 This is a fork of the Apache Spark image provided by p7hb. 
 The original Apache Spark Docker image is available directly from [https://index.docker.io](https://hub.docker.com/u/p7hb/ "» Docker Hub").
 
@@ -10,6 +10,13 @@ This image contains the following softwares:
 * Scala v2.12.2
 * SBT v0.13.15
 * Apache Spark v2.2.0
+
+### Getting the image
+You can either build from this repo, or pull from dockerhub using
+
+        docker pull polydeucesys/docker-spark:2.2.0
+	
+Note the repository name has no hyphen, and that the version tag must be included.
 
 ### Executing the container as master or worker
 The container supports executing as either the spark master or a worker based on either command line arguments or ENV
