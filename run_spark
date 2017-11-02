@@ -1,0 +1,32 @@
+echo $1 $2
+if [ -z "${SPARK_MODE}" ]; then
+  MODE_ARG=$(echo "$1" | awk '{print tolower($0)}')
+  echo "Using arg $MODE_ARG"
+  if [ "$MODE_ARG" == "worker" ]; then
+     SPARK_MODE="worker"
+  else
+    SPARK_MODE="master"
+  fi
+else
+  SPARK_MODE=$(echo "$SPARK_MODE" | awk '{print tolower($0)}')
+fi
+if [ "${SPARK_MODE}" == "worker" ]; then
+  if [ -z "${SPARK_MASTER}" ]; then
+    if [ -z "$2" ]; then
+      SPARK_MASTER="spark://spark:7077"
+    else
+      SPARK_MASTER=$(echo "$2" | awk '{print tolower($0)}')
+    fi
+  fi
+fi
+if [ "${SPARK_MODE}" == "worker" ];
+then
+  echo "Starting spark worker with master $SPARK_MASTER"
+  start-slave.sh ${SPARK_MASTER} 
+elif [ "${SPARK_MODE}" == "master" ];
+then
+  start-master.sh
+else
+  echo "Unrecognized spark mode $SPARK_MODE" 
+fi
+sleep infinity
